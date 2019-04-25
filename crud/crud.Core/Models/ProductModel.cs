@@ -4,7 +4,7 @@ using System.Text;
 
 namespace crud.Core.Models
 {
-    class ProductModel
+    public class ProductModel
     {
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }

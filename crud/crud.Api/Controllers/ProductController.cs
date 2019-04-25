@@ -23,5 +23,12 @@ namespace crud.Api.Controllers
             var productEntities = _productRepository.GetProducts();
             return Ok(productEntities);
         }
+
+        [Route("{id}")]
+        public IActionResult GetProduct(int id)
+        {
+            var productEntity = _productRepository.GetProduct(id);
+            return Ok(productEntity);
+        }
     }
 }
