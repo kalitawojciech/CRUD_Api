@@ -1,4 +1,6 @@
-﻿using crud.Core.Interfaces;
+﻿using AutoMapper;
+using crud.Core.Interfaces;
+using crud.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace crud.Api.Controllers
     public class ProductController : ControllerBase
     {
         private IProductRepository _productRepository;
+        private IMapper _mapper;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
+            _mapper = mapper;
         }
 
         public IActionResult GetProducts()
@@ -28,7 +32,8 @@ namespace crud.Api.Controllers
         public IActionResult GetProduct(int id)
         {
             var productEntity = _productRepository.GetProduct(id);
-            return Ok(productEntity);
+            var productModel = _mapper.Map<ProductModel>(productEntity);
+            return Ok(productModel);
         }
     }
 }
