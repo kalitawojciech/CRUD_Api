@@ -15,6 +15,17 @@ namespace crud.Infrastructure
         {
             _context = context;
         }
+
+        public void AddProduct(ProductEntity productToAdd)
+        {
+            if(productToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(productToAdd));
+            }
+
+            _context.Add(productToAdd);
+        }
+
         public ProductEntity GetProduct(int id)
         {
             return _context.Products.Where(p => p.ProductId == id).FirstOrDefault();
@@ -23,6 +34,11 @@ namespace crud.Infrastructure
         public IEnumerable<ProductEntity> GetProducts()
         {
             return _context.Products.ToList();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() > 0);
         }
     }
 }

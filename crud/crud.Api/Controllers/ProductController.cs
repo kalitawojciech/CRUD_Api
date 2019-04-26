@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using crud.Core.Entities;
 using crud.Core.Interfaces;
 using crud.Core.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +19,41 @@ namespace crud.Api.Controllers
 
         public ProductController(IProductRepository productRepository, IMapper mapper)
         {
-            _productRepository = productRepository;
-            _mapper = mapper;
+            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        [HttpGet]
         public IActionResult GetProducts()
         {
             var productEntities = _productRepository.GetProducts();
-            return Ok(productEntities);
+            var productModels = _mapper.Map<IEnumerable<ProductModel>>(productEntities);
+            return Ok(productModels);
         }
 
-        [Route("{id}")]
+        [HttpGet]
+        [Route("{id}", Name = "GetProduct")]
         public IActionResult GetProduct(int id)
         {
             var productEntity = _productRepository.GetProduct(id);
+            if(productEntity == null)
+            {
+                return NotFound();
+            }
             var productModel = _mapper.Map<ProductModel>(productEntity);
             return Ok(productModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct([FromBody] ProductModel product)
+        {
+            var productEntity = _mapper.Map<ProductEntity>(product);
+            _productRepository.AddProduct(productEntity);
+            _productRepository.SaveChanges();
+
+            //_productRepository.GetProduct(productEntity.ProductId);
+            //return CreatedAtRoute("GetProduct", new { id = productEntity.ProductId }, productEntity);
+            return Ok();
         }
     }
 }

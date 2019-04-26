@@ -13,6 +13,7 @@ namespace crud.Api
         public ProductProfile()
         {
             CreateMap<ProductEntity, ProductModel>();
+            CreateMap<ProductModel, ProductEntity>();
         }
     }
 }

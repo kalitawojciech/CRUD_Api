@@ -9,5 +9,7 @@ namespace crud.Core.Interfaces
     {
         ProductEntity GetProduct(int id);
         IEnumerable<ProductEntity> GetProducts();
+        void AddProduct(ProductEntity product);
+        bool SaveChanges();
     }
 }
