@@ -64,6 +64,11 @@ namespace crud.Api
             }
             app.UseHttpsRedirection();
             app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint(
+                    "/swagger/ProductOpenAPISpecification/swagger.json", "Product API");
+            });
             app.UseMvc();
         }
     }
