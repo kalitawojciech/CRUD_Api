@@ -37,6 +37,17 @@ namespace crud.Api
             services.AddTransient<IProductRepository, ProductRepository>();
 
             services.AddAutoMapper();
+
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc(
+                    "ProductOpenAPISpecification",
+                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "Product API",
+                        Version = "1"
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +63,7 @@ namespace crud.Api
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseSwagger();
             app.UseMvc();
         }
     }
