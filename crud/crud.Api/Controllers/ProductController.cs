@@ -47,6 +47,10 @@ namespace crud.Api.Controllers
         [HttpPost]
         public IActionResult CreateProduct([FromBody] ProductModel product)
         {
+            if(product == null)
+            {
+                return BadRequest();
+            }
             var productEntity = _mapper.Map<ProductEntity>(product);
             _productRepository.AddProduct(productEntity);
             _productRepository.SaveChanges();
