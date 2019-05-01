@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace crud.Core.Interfaces
 {
-    interface IProductAsyncRepository
+    public interface IProductAsyncRepository
     {
         Task<ProductEntity> GetProductAsync(int id);
         Task<IEnumerable<ProductEntity>> GetProductsAsync();
