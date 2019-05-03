@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace crud.Infrastructure.Services
 {
-    class ProductAsyncRepository : IProductAsyncRepository
+    public class ProductAsyncRepository : IProductAsyncRepository
     {
         private ProductContext _context;
 

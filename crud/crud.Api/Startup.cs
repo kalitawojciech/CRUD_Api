@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using crud.Core.Interfaces;
 using crud.Infrastructure;
+using crud.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,7 @@ namespace crud.Api
             services.AddDbContext<ProductContext>(o => o.UseSqlServer(ConnectionString));
 
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductAsyncRepository, ProductAsyncRepository>();
 
             services.AddAutoMapper();
 
