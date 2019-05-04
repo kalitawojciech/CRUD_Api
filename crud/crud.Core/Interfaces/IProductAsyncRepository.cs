@@ -10,7 +10,7 @@ namespace crud.Core.Interfaces
     {
         Task<ProductEntity> GetProductAsync(int id);
         Task<IEnumerable<ProductEntity>> GetProductsAsync();
-        void AddProduct(ProductEntity product);
+        void AddProduct(ProductEntity productToAdd);
         Task<bool> SaveChangesAsync();
     }
 }

@@ -17,9 +17,14 @@ namespace crud.Infrastructure.Services
         {
             _context = context;
         }
-        public void AddProduct(ProductEntity product)
+        public void AddProduct(ProductEntity productToAdd)
         {
-            throw new NotImplementedException();
+            if (productToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(productToAdd));
+            }
+
+            _context.Add(productToAdd);
         }
 
         public async Task<ProductEntity> GetProductAsync(int id)
