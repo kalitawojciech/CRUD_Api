@@ -7,7 +7,7 @@ using System.Text;
 
 namespace crud.Infrastructure
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository, IDisposable
     {
         private ProductContext _context;
 
@@ -39,6 +39,24 @@ namespace crud.Infrastructure
         public bool SaveChanges()
         {
             return (_context.SaveChanges() > 0);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
+                }
+            }
         }
     }
 }
