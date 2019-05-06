@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace crud.Infrastructure.Services
 {
-    public class ProductAsyncRepository : IProductAsyncRepository
+    public class ProductAsyncRepository : IProductAsyncRepository, IDisposable
     {
         private ProductContext _context;
 
         public ProductAsyncRepository(ProductContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
         public void AddProduct(ProductEntity productToAdd)
         {
@@ -37,9 +37,26 @@ namespace crud.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return (await _context.SaveChangesAsync() > 0);
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
+                }
+            }
         }
     }
 }
