@@ -32,9 +32,9 @@ namespace crud.Infrastructure.Services
             return await _context.Products.Where(p => p.ProductId == id).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<ProductEntity>> GetProductsAsync()
+        public async Task<IEnumerable<ProductEntity>> GetProductsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Products.ToListAsync();
         }
 
         public async Task<bool> SaveChangesAsync()
