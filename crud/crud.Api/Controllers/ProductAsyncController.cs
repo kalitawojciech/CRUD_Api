@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace crud.Api.Controllers
 {
-    [Route("api/product/async")]
+    [Route("api/productasync")]
     [ApiController]
     public class ProductAsyncController : ControllerBase
     {
@@ -19,6 +19,13 @@ namespace crud.Api.Controllers
         {
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var productsEntities = await _productRepository.GetProductsAsync();
+            return Ok(productsEntities);
         }
     }
 }
