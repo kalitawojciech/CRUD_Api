@@ -27,5 +27,17 @@ namespace crud.Api.Controllers
             var productsEntities = await _productRepository.GetProductsAsync();
             return Ok(productsEntities);
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetProduct(int productId)
+        {
+            var productEntity = await _productRepository.GetProductAsync(productId);
+            if(productEntity == null)
+            {
+                return NotFound();
+            }
+            return Ok(productEntity);
+        }
     }
 }
