@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using crud.Core.Entities;
 using crud.Core.Interfaces;
+using crud.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ namespace crud.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id}", Name = "GetProduct")]
         public async Task<IActionResult> GetProduct(int productId)
         {
             var productEntity = await _productRepository.GetProductAsync(productId);
@@ -38,6 +40,18 @@ namespace crud.Api.Controllers
                 return NotFound();
             }
             return Ok(productEntity);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct([FromBody] ProductModel productModel)
+        {
+            var productEntity = Mapper.Map<ProductEntity>(productModel);
+            _productRepository.AddProduct(productEntity);
+            await _productRepository.SaveChangesAsync();
+            await _productRepository.GetProductAsync(productEntity.ProductId);
+
+            return CreatedAtRoute("GetProduct", new { productId = productEntity.ProductId }, productEntity);
+
         }
     }
 }
