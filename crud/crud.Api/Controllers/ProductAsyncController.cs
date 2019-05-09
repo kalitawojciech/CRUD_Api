@@ -31,7 +31,7 @@ namespace crud.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetProduct")]
+        [Route("{id}", Name = "GetProductAsync")]
         public async Task<IActionResult> GetProduct(int productId)
         {
             var productEntity = await _productRepository.GetProductAsync(productId);
@@ -50,7 +50,7 @@ namespace crud.Api.Controllers
             await _productRepository.SaveChangesAsync();
             await _productRepository.GetProductAsync(productEntity.ProductId);
 
-            return CreatedAtRoute("GetProduct", new { productId = productEntity.ProductId }, productEntity);
+            return CreatedAtRoute("GetProductAsync", new { productId = productEntity.ProductId }, productEntity);
 
         }
     }

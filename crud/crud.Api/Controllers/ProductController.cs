@@ -59,5 +59,22 @@ namespace crud.Api.Controllers
             //return CreatedAtRoute("GetProduct", new { id = productEntity.ProductId }, productEntity);
             return Ok();
         }
+
+        
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct(int productId)
+        {
+            var productEntity = _productRepository.GetProduct(productId);
+
+            if(productEntity == null)
+            {
+                return NotFound();
+            }
+
+            _productRepository.DeleteProduct(productEntity);
+            _productRepository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
