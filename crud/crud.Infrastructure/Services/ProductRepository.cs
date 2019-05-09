@@ -58,5 +58,10 @@ namespace crud.Infrastructure
                 }
             }
         }
+
+        public void DeleteProduct(ProductEntity product)
+        {
+            _context.Products.Remove(product);
+        }
     }
 }

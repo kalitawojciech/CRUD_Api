@@ -11,5 +11,7 @@ namespace crud.Core.Interfaces
         IEnumerable<ProductEntity> GetProducts();
         void AddProduct(ProductEntity product);
         bool SaveChanges();
+
+        void DeleteProduct(ProductEntity product);
     }
 }
